@@ -164,7 +164,13 @@ main{
 .navbar__logo>svg>path{
     fill: var(--gunmetal);
 }
+.navbar__right{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
 .navbar__button{
+    display: block;
     width: 30px;
     height: 30px;
     padding: 4px;
@@ -235,13 +241,38 @@ main{
     animation-fill-mode: forwards;
     animation-timing-function: ease;
 }
+.cart--remove-element{
+    animation-name: cart-update;
+    animation-duration: 0.25s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease;
+}
 .cart-container{
     height: calc(100% - 123px);
     padding: 8px 0;
     margin-bottom: 16px;
+    overflow-x: hidden;
     overflow-y: auto;
 }
 
+.cart-container--empty{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.cart__empty-hint>svg{
+    display: block;
+    margin: 0 auto 8px;
+}
+.cart__empty-hint>svg>path{
+    stroke: #666;
+    fill: none;
+}
+.cart__empty-hint>p{
+    text-align: center;
+    font-size: 1.8rem;
+    color: #666;
+}
 .cart__close{
     display: flex;
     align-items: center;
@@ -617,4 +648,12 @@ ul>.mobile-menu__options--active>a{
         transform: translateX(100%);
     }
 
+}
+@keyframes cart-update{
+    0%{
+        transform: translateY(0);
+    }
+    100%{
+        transform: translateY(-83px);
+    }
 }
