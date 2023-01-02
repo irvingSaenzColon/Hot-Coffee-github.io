@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Descuentos</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="./css/styles_discount.css" />
+
+    </head>
+    <body>
+        <nav class="navbar">
+            <div class="navbar__logo">
+                <svg class="navbar__icon" width="193" height="203" viewBox="0 0 193 203" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M143 83.5H10.5C4 83.5 0.999992 90 0.999992 93V170.5C0.999992 187 19.5 202.5 34 202.5H109C128.5 202.5 143 187 143 167.5V83.5Z" fill="#636363" stroke="#636363"/>
+                    <path d="M192 126.5C191.51 168 152 168 144 168V143.5C153 143.5 169 143.5 169 126.5C169 108 155.5 108 144 108V83.5C154.5 83.5 192 84 192 126.5Z" fill="#636363" stroke="#636363"/>
+                    <path d="M71.7868 9C71.7868 9 64.7868 1 56.2868 1C44.938 1 36.2943 11.3959 38.2868 22.5C40.4202 34.3892 54.0674 47.383 68.2868 58.5C70.2868 60.0636 72.2868 60 74.2868 58.5C90.7716 46.1365 102.713 33.7766 104.787 22.5C106.864 11.2026 99.0476 1 87.2868 1C77.7868 1 71.7868 9 71.7868 9Z" fill="#636363" stroke="#636363"/>
+                </svg>
+                <a href="./discount.html">Hot<sub>Coffee</sub></a>
+                
+            </div>
+            <button class="navbar__button navbar__button--realtive">
+                <svg class="navbar__icon" viewBox="0 0 576 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z" fill="#636363" stroke="#636363"/>    
+                </svg>
+                <span>0</span>
+            </button>
+            <button class="navbar__burger-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+        <aside class="mobile-menu">
+            <h2 class="mobile-menu__toast">¡ Bienvenido !</h2>
+            <h3 class="mobile-menu__title">Mi cuenta</h3>
+            <ul class="mobile-menu__options">
+                <li><a href="">Mi Perfil</a></li>
+                <li><a href="">Mi pédidos</a></li>
+                <li><a href="">Mi ordenes</a></li>
+                <li><a href="">Cerrar sesión</a></li>
+            </ul>
+            <ul class="mobile-menu__options">
+                <li class="mobile-menu__options--active"><a href="">Inicio</a></li>
+                <li><a href="">Productos</a></li>
+                <li><a href="">Acerca de</a></li>
+                <li><a href="">Acerca de</a></li>
+            </ul>
+            
+            <button>Cerrar Sesion</button>
+        </aside>
+        <header>
+            
+        </header>
+        <main>
+            <h2 class="title-section">Coffees</h2>
+            <section id="coffees" class="products-container">
+            </section>
+
+            <h2 class="title-section">Desserts</h2>
+            <section id="desserts" class="products-container">
+            </section>
+        </main>
+        
+        <script src="./js/discount.js"></script>
+    </body>
+</html>
