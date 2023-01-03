@@ -383,16 +383,29 @@ main{
 .cart__checkout>p>span:last-of-type{
     font-weight: 700;
 }
-.cart__checkout>button{
-    width: 100%;
+.cart__checkout>div>button{
+    
     border: 1px solid var(--gunmetal);
     border-radius: 4px;
     padding: 8px 16px;
 
-    font-size: 1.5rem;
-    font-weight: 700;
     color: var(--light-cyan);
     background-color: var(--gunmetal);
+}
+.cart__checkout>div{
+    display: flex;
+    gap: 5px;
+}
+.cart__checkout>div>button:first-of-type{
+    width: 80%;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+.cart__checkout>div>button:last-of-type{
+    fill: var(--light-cyan);
+    width: 20%;
+    background-color: var(--burnt-sienna);
+    border: 1px solid var(--burnt-sienna);
 }
 
 
@@ -615,7 +628,6 @@ ul>.mobile-menu__options--active>a{
 }
 
 .message-box__button{
-
     width: 100%;
     padding: 8px 16px;
     border-radius: 4px;
@@ -623,10 +635,26 @@ ul>.mobile-menu__options--active>a{
     font-size: 1.5rem;
 
 }
+.message-box__input{
+    padding: 8px 16px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 12px;
+
+    font-size: 1.6rem;
+}
 .message-box__button--primary{
     border: 1px solid var(--bdazzled-blue);
     color: var(--light-cyan);
     background-color: var(--bdazzled-blue);
+}
+
+.message-box__button--secondary{
+    margin-top: 8px;
+    border: 1px solid var(--burnt-sienna);
+    color: var(--burnt-sienna);
+    background-color: var(--light-cyan);
 }
 
 /* animations */

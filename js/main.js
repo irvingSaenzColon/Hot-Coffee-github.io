@@ -1,4 +1,6 @@
 //HTML Elements
+const body = document.querySelector('body');
+
 const coffees_container = document.getElementById('coffees');
 const desserts_container = document.getElementById('desserts');
 const mobile_menu = document.querySelector('aside.mobile-menu');
@@ -15,17 +17,22 @@ const cart_count = document.querySelector('button.navbar__button>span');
 const cart_button = document.getElementById('cart-btn');
 const cart_close_button = document.querySelector('button.cart__close');
 const cart_total = document.querySelector('section.cart__checkout>p>span:nth-child(2)');
-const cart_buy = document.querySelector('section.cart__checkout>button');
+const cart_buy = document.querySelector('section.cart__checkout>div>button:nth-child(1)');
+const cart_code = document.querySelector('section.cart__checkout>div>button:nth-child(2)');
 
 const wrapper = document.querySelector('div.wrapper');
 
+const aply_message_box = document.getElementById('message-box-code-aply');
 const close_message_box = document.querySelector('button.message-box__close');
+const close_message_box_code = document.getElementById('message-box-code-close');
+const cancel_message_box_code = document.getElementById('message-box-code-cancel');
 const ok_message_box = document.querySelector('button.message-box__button--primary');
+const code_message_box = document.getElementById('message-box-code');
 
 // Arrays
 const products = [];
 const cart = [];
-
+const codes = [];
 // Arrays definition
 
 products.push({
@@ -185,13 +192,32 @@ products.push({
     image: 'https://natashaskitchen.com/wp-content/uploads/2021/05/Glazed-Donuts-SQ-500x500.jpg'
 });
 
+codes.push({
+    raw: 'XZIA15',
+    applied: false
+});
+
+codes.push({
+    raw: 'ZEDF26',
+    applied: false
+});
+
+codes.push({
+    raw: 'PASG54',
+    applied: false
+});
+
 
 // Events
 burger_button.addEventListener('click', onToggleMobileMenu);
 cart_close_button.addEventListener('click', onCloseCart);
 cart_button.addEventListener('click', onToggleCartMenu);
 cart_buy.addEventListener('click', onBuy)
+cart_code.addEventListener('click', onApplyCode);
 close_message_box.addEventListener('click', onCloseMessageBox);
+aply_message_box.addEventListener('click', onApplyDiscount);
+close_message_box_code.addEventListener('click', onCloseMessageBoxCode);
+cancel_message_box_code.addEventListener('click', onCloseMessageBoxCode);
 ok_message_box.addEventListener('click', onCloseMessageBox);
 
 // Click Functions
@@ -199,6 +225,7 @@ function onToggleMobileMenu(event){
     
 
     if(!cart_menu.classList.contains('inactive')){
+        
         cart_menu.classList.add('cart--close');
         setTimeout(function () {
             cart_menu.classList.remove('cart--open');
@@ -312,6 +339,7 @@ function onRemoveFromCart(event){
     cart.splice(result, 1);
     cart_count.innerText = cart.length;
     cart_count.classList.add('navbar__button--add-to-cart');
+
     setTimeout(function () {
         cart_count.classList.remove('navbar__button--add-to-cart');
     }, 500);
@@ -372,6 +400,7 @@ function onToggleCartMenu(event){
         cart_total.innerText = `$ ${calculateTotal()}`;
         cart_menu.classList.add('cart--open');
         cart_menu.classList.remove('inactive');
+        body.classList.add('no-overflow');
 
         if(cart.length){
             cart_buy.disabled = false;
@@ -391,9 +420,9 @@ function onToggleCartMenu(event){
             cart_buy.disabled = true;
         }
 
-        
     }
     else{
+        body.classList.remove('no-overflow');
         cart_menu.classList.add('cart--close');
         setTimeout(function () {
             cart_menu.classList.remove('cart--open');
@@ -405,6 +434,7 @@ function onToggleCartMenu(event){
 
 function onCloseCart(event){
     cart_menu.classList.add('cart--close');
+    body.classList.remove('no-overflow');
     setTimeout(function(){
         cart_menu.classList.remove('cart--open');
         cart_menu.classList.remove('cart--close');
@@ -416,7 +446,7 @@ function onBuy(event){
     while(cart.length){
         cart.pop();
     }
-
+    
     cart_total.innerText= `$ ${calculateTotal()}`;
 
     cart_count.innerText = cart.length;
@@ -445,6 +475,55 @@ function onBuy(event){
     }, 250);
 }
 
+function onApplyCode(event){
+    
+        wrapper.classList.add('wrapper--show');
+        wrapper.classList.remove('inactive');
+
+        setTimeout(function(){
+            wrapper.classList.remove('wrapper--show');
+            code_message_box.classList.add('message-box--show');
+            code_message_box.classList.remove('inactive');
+            
+            setTimeout(function(){
+                code_message_box.classList.remove('message-box--show');
+            }, 250)
+            
+        }, 250);
+    
+}
+
+function onApplyDiscount(event){
+    let code = document.querySelector('input.message-box__input').value;
+
+    let result = codes.find(function(element){
+        if(element.raw === code && !element.applied){
+            element.applied = true;
+            return element;
+        }
+    });
+
+    if(!code.trim().length){
+        console.warn('Ingrese un código válido');
+        return;
+    }
+
+    if(result){
+        if(result.applied){
+            console.warn('Lo sentimos, ese código ya ha sido usado');
+            return;
+        }
+
+        let total = getDiscount(calculateTotal(), 20);
+        cart_total.innerText = `$ ${total.toFixed(2)}`
+        console.log(total);
+    }
+    else{
+        console.warn('El código no existe');
+    }
+    
+}
+
 function onCloseMessageBox(event){
     const message_box = event.target.closest('div.message-box');
 
@@ -456,11 +535,24 @@ function onCloseMessageBox(event){
         wrapper.classList.add('wrapper--hide');
         setTimeout(function(){
             wrapper.classList.remove('wrapper--hide');
+            wrapper.classList.remove('wrapper--show');
             wrapper.classList.add('inactive');
         }, 250);
     }, 500);
 }
 
+function onCloseMessageBoxCode(event){
+    code_message_box.classList.add('message-box--hide');
+    setTimeout(function(){
+        code_message_box.classList.add('inactive');
+        code_message_box.classList.remove('message-box--hide');
+        wrapper.classList.add('wrapper--hide');
+        setTimeout(function(){
+            wrapper.classList.remove('wrapper--hide');
+            wrapper.classList.add('inactive');
+        }, 250)
+    }, 500)
+}
 // Create HTML Element
 function productHTML(product){
     const article = document.createElement('article');
@@ -608,6 +700,7 @@ function renderArray(array, container, category){
 function openMobileMenu(){
     mobile_menu.classList.add('mobile-menu--open');
     mobile_menu.classList.remove('inactive');
+    body.classList.add('no-overflow');
 
     first_span.classList.add('navbar__burger-btn--close-down');
     last_span.classList.add('navbar__burger-btn--close-up');
@@ -617,6 +710,7 @@ function openMobileMenu(){
 
 function closeMobileMenu(){
     mobile_menu.classList.add('mobile-menu--close');
+    body.classList.remove('no-overflow');
 
     first_span.classList.add('navbar__burger-btn--open-down');
     last_span.classList.add('navbar__burger-btn--open-up');
