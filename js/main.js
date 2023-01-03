@@ -15,6 +15,12 @@ const cart_count = document.querySelector('button.navbar__button>span');
 const cart_button = document.getElementById('cart-btn');
 const cart_close_button = document.querySelector('button.cart__close');
 const cart_total = document.querySelector('section.cart__checkout>p>span:nth-child(2)');
+const cart_buy = document.querySelector('section.cart__checkout>button');
+
+const wrapper = document.querySelector('div.wrapper');
+
+const close_message_box = document.querySelector('button.message-box__close');
+const ok_message_box = document.querySelector('button.message-box__button--primary');
 
 // Arrays
 const products = [];
@@ -184,6 +190,9 @@ products.push({
 burger_button.addEventListener('click', onToggleMobileMenu);
 cart_close_button.addEventListener('click', onCloseCart);
 cart_button.addEventListener('click', onToggleCartMenu);
+cart_buy.addEventListener('click', onBuy)
+close_message_box.addEventListener('click', onCloseMessageBox);
+ok_message_box.addEventListener('click', onCloseMessageBox);
 
 // Click Functions
 function onToggleMobileMenu(event){
@@ -275,7 +284,7 @@ function onDecreaseUnits(event){
     const product_name = parent.previousSibling.innerText;
 
     cart.find(function(element){
-        if(element.name == product_name){
+        if(element.name === product_name && element.units > 1){
             element.units --;
             return;
         }
@@ -361,6 +370,7 @@ function onToggleCartMenu(event){
         cart_menu.classList.remove('inactive');
 
         if(cart.length){
+            cart_buy.disabled = false;
             if(cart_container.classList.contains('cart-container--empty'))
                 cart_container.classList.remove('cart-container--empty');
 
@@ -371,8 +381,10 @@ function onToggleCartMenu(event){
             if(cart_container.childNodes.length)
                 return;
 
+
             cart_container.classList.add('cart-container--empty');
             cart_container.appendChild(emptyCartHTML());
+            cart_buy.disabled = true;
         }
 
         
@@ -393,6 +405,55 @@ function onCloseCart(event){
         cart_menu.classList.remove('cart--open');
         cart_menu.classList.remove('cart--close');
         cart_menu.classList.add('inactive');
+    }, 500);
+}
+
+function onBuy(event){
+    while(cart.length){
+        cart.pop();
+    }
+
+    cart_total.innerText= `$ ${calculateTotal()}`;
+
+    cart_count.innerText = cart.length;
+    cart_count.classList.add('navbar__button--add-to-cart');
+    setTimeout(function () {
+        cart_count.classList.remove('navbar__button--add-to-cart');
+    }, 500);
+
+    clearContainer(cart_container);
+
+    cart_container.classList.add('cart-container--empty');
+    cart_container.appendChild(emptyCartHTML());
+
+    cart_buy.disabled = true;
+
+    wrapper.classList.add('wrapper--show');
+    wrapper.classList.remove('inactive');
+    setTimeout(function(){
+        const message_box = document.querySelector('div.message-box');
+        message_box.classList.add('message-box--show');
+        message_box.classList.remove('inactive');
+
+        setTimeout(function(){
+            message_box.classList.remove('message-box--show');
+        }, 500);
+    }, 250);
+}
+
+function onCloseMessageBox(event){
+    const message_box = event.target.closest('div.message-box');
+
+    message_box.classList.add('message-box--hide');
+    setTimeout(function(){
+        message_box.classList.remove('message-box--hide');
+        message_box.classList.add('inactive');
+
+        wrapper.classList.add('wrapper--hide');
+        setTimeout(function(){
+            wrapper.classList.remove('wrapper--hide');
+            wrapper.classList.add('inactive');
+        }, 250);
     }, 500);
 }
 
@@ -498,11 +559,13 @@ function cartItemHTML(product){
 function emptyCartHTML(){
     const div = document.createElement('div');
     div.classList.add('cart__empty-hint');
+    
 
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.setAttribute('width', '175');
     svg.setAttribute('height', '135');
     svg.setAttribute('viewBox', '0 0 175 135');
+    svg.classList.add('cart__empty-hint--show');
 
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     path.setAttribute('d', 'M5 130L170 5M85 5C119.518 5 147.5 32.9822 147.5 67.5C147.5 102.018 119.518 130 85 130C50.4822 130 22.5 102.018 22.5 67.5C22.5 32.9822 50.4822 5 85 5Z');
