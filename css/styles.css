@@ -465,10 +465,11 @@ main{
     border: 1px solid var(--burnt-sienna);
     background-color: var(--burnt-sienna);
 
-    transition: background-color 0.25s ease;
+    transition: background-color 0.25s ease, border 0.25s ease;
 }
 .product__button:hover{
-    background-color: var(--light-cyan);
+    border: 1px solid var(--gunmetal);
+    background-color: var(--gunmetal);
 }
 .product__button>img{
     width: 100%;
